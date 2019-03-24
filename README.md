@@ -1,4 +1,4 @@
-#The Lore of DogsNCats: (totally useless) 
+# The Lore of DogsNCats: (totally useless) 
 In the year 6969, The evolution of the animal race has improver massively over the last few years. The Dogs and Cats especially have improved to the point where they successfully created galactic transportation in the year 4200. The Cats especially reigned supreme in the scientific evolution of the new race. The Dogs have improved in other ways by improving their strength and stamina to a super"animal" force.
 
 Once the new race discovered space travel, they created a new monarchy called the galactic empire. But a problem has been created, the Cats think that savages like the Dogs shouldn't be in the galactic empire. they think the dogs should stay on earth and find their own survival. The Dogs however think that the Cats shouldn't be in the galactic empire, because they are to dominant and can not rule correctly. This lead to a all out broken war that started in the year they call E. (meaning: "Ending of the partnership")
