@@ -80,7 +80,7 @@ public class Unit : MonoBehaviour {
 					}
 				}
 
-				Quaternion targetRotation = Quaternion.LookRotation (target.position);
+				Quaternion targetRotation = Quaternion.LookRotation (path.lookPoints [pathIndex] - transform.position);
 				transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
 				transform.Translate (Vector3.forward * Time.deltaTime * speed * speedPercent, Space.Self);
 			}
