@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DogDamage : Leaf
-{   
+public class CatScratch : Leaf
+{
     public float waitSecondsForAttack;
     private Agent agent;
-    private DogTree dog;
+    private CatTree cat;
     public override void StartBehaviour(Agent _agent){
         agent = _agent;
-        dog = agent.GetComponent<DogTree>();
+        cat = agent.GetComponent<CatTree>();
 
-        //behaviour
-        //Debug.Log("dog does damage");
         StartCoroutine(DoDamage());
     }
 
@@ -31,10 +29,10 @@ public class DogDamage : Leaf
     //behaviour
     IEnumerator DoDamage(){
         yield return new WaitForSeconds(waitSecondsForAttack);
-        dog.seenCat.GetComponent<CatTree>().health -= Mathf.RoundToInt(dog.dogDamage);
-        if(dog.seenCat.GetComponent<CatTree>().health <= 0){
-            Destroy(dog.seenCat);
-            dog.seenCat = null;
+        cat.seenDog.GetComponent<CatTree>().health -= Mathf.RoundToInt(cat.catDamage);
+        if(cat.seenDog.GetComponent<CatTree>().health <= 0){
+            Destroy(cat.seenDog);
+            cat.seenDog = null;
         }
         agent.Succeed();
     }

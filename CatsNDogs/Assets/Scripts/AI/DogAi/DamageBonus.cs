@@ -6,16 +6,23 @@ public class DamageBonus  : Leaf
 {   
     [Range(1,5)]
     public float damageIncreasePercent = 1;
+    public float damageCap = 50;
 
     private Agent agent;
     private DogTree dog;
+    private float newDamage;
     public override void StartBehaviour(Agent _agent){
         agent = _agent;
         dog = agent.GetComponent<DogTree>();
 
         //behaviour
-        Debug.Log("dog damage increase with " + (dog.dogDamage * damageIncreasePercent) + " so the current damage is now: " + dog.dogDamage);
-        dog.dogDamage += (dog.dogDamage * damageIncreasePercent);
+        newDamage = dog.dogDamage * damageIncreasePercent;
+        if(newDamage >= damageCap){
+            newDamage = damageCap;
+        }
+        Debug.Log("dog damage increase with " + newDamage + " so the current damage is now: " + dog.dogDamage);
+        dog.dogDamage = newDamage;
+        Succeed();
     }
 
     public override void Succeed(){

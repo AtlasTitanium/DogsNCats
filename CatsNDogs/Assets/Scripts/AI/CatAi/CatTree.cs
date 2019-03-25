@@ -6,6 +6,8 @@ public class CatTree : Agent
 {
     [Header("Cat Info")]
     public int health;
+    public float catDamage;
+    public int lookDistance;
     public float timeToWait;
 
     [Header("Behaviour")]

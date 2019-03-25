@@ -27,14 +27,14 @@ public class RunTowardsCat : Leaf
         if(AStarUnit.routeFinished){
             AStarUnit.enabled = false;
             AStarUnit.target = null;
-            Debug.Log("Cat fights");
+            //Debug.Log("Cat fights");
             DoDamage.StartBehaviour(agent);
         } else {
             Continue();
         }
 
         if(dog.seenCat.GetComponent<CatSeeDog>().currentLeaf == dog.seenCat.GetComponent<CatRunAway>()){
-            Debug.Log("Cat runs away");
+            //Debug.Log("Cat runs away");
             GainDamageBonus.StartBehaviour(agent);
             Succeed();
         }
