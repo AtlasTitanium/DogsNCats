@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CatSeeDog : Leaf
 {
-    public CatTree cat;
     public Leaf CatRunAway;
     public Leaf Scratch;
+
+    [HideInInspector]
     public Leaf currentLeaf;
     public int tooBigDogSize;
 
     private Agent agent;
+    private CatTree cat;
     public override void StartBehaviour(Agent _agent){
         agent = _agent;
+        cat = agent.GetComponent<CatTree>();
         
         if(cat.seenDog.GetComponent<DogTree>().dogSize >= tooBigDogSize){
             currentLeaf = CatRunAway;

@@ -42,10 +42,12 @@ public class Unit : MonoBehaviour {
 		while (true) {
 			yield return new WaitForSeconds (minPathUpdateTime);
 			//print (((target.position - targetPosOld).sqrMagnitude) + "    " + sqrMoveThreshold);
-			if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold) {
-				PathRequestManager.RequestPath (new PathRequest(transform.position, target.position, OnPathFound));
-				targetPosOld = target.position;
-			}			
+			if(target != null){
+				if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold) {
+					PathRequestManager.RequestPath (new PathRequest(transform.position, target.position, OnPathFound));
+					targetPosOld = target.position;
+				}	
+			}		
 		}
 	}
 
@@ -78,7 +80,7 @@ public class Unit : MonoBehaviour {
 					}
 				}
 
-				Quaternion targetRotation = Quaternion.LookRotation (path.lookPoints [pathIndex] - transform.position);
+				Quaternion targetRotation = Quaternion.LookRotation (target.position);
 				transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
 				transform.Translate (Vector3.forward * Time.deltaTime * speed * speedPercent, Space.Self);
 			}

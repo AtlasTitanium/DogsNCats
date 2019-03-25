@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeeCatSequence : Leaf
+public class CatPurr : Leaf
 {
-    public Leaf RunTowardsCat;
-    
-    
     private Agent agent;
-    private DogTree dog;
+    private CatTree cat;
     public override void StartBehaviour(Agent _agent){
         agent = _agent;
-        dog = agent.GetComponent<DogTree>();
+        cat = agent.GetComponent<CatTree>();
 
-        RunTowardsCat.StartBehaviour(agent);
+        Debug.Log("purrrrr");
+        Succeed();
     }
 
     public override void Succeed(){

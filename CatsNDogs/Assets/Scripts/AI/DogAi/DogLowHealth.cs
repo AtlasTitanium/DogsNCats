@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeeCatSequence : Leaf
+public class DogLowHealth : Leaf
 {
-    public Leaf RunTowardsCat;
-    
+    public Leaf RunAway;
     
     private Agent agent;
     private DogTree dog;
@@ -13,7 +12,7 @@ public class SeeCatSequence : Leaf
         agent = _agent;
         dog = agent.GetComponent<DogTree>();
 
-        RunTowardsCat.StartBehaviour(agent);
+        RunAway.StartBehaviour(agent);
     }
 
     public override void Succeed(){

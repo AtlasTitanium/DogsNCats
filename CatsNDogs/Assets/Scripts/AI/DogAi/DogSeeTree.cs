@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CatRunAway : Leaf
-{
-    public Transform retreatPoint;
+public class DogSeeTree : Leaf
+{   
+    public Leaf PeeOnTree;
 
     private Agent agent;
+    private DogTree dog;
     private Unit AStarUnit;
-    private CatTree cat;
     public override void StartBehaviour(Agent _agent){
         agent = _agent;
-        cat = agent.GetComponent<CatTree>();
+        dog = agent.GetComponent<DogTree>();
         AStarUnit = agent.GetComponent<Unit>();
 
-        AStarUnit.target = retreatPoint;
-        AStarUnit.enabled = true;
-        if(AStarUnit.routeFinished){
-            Succeed();
-        } else {
-            Continue();
+        //behaviour
+        if(dog.health <= dog.initHealth/10){
+            AStarUnit.target = dog.seenTree.transform;
+            AStarUnit.enabled = true;
+
+            if(AStarUnit.routeFinished){
+                PeeOnTree.StartBehaviour(agent);
+            } else {
+                Continue();
+            }
         }
     }
 

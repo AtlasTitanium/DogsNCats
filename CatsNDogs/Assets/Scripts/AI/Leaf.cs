@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Leaf
+public class Leaf : MonoBehaviour
 {
     public virtual void StartBehaviour(Agent _agent){
         Debug.Log("No behaviour given");

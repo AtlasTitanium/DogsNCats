@@ -7,6 +7,8 @@ public class DogTree : Agent
     [Header("Dog Info")]
     public int health;
     public int dogSize;
+    public float dogDamage;
+    public int lookDistance;
     public float timeToWait;
 
     [Header("Behaviour")]
@@ -15,13 +17,22 @@ public class DogTree : Agent
     public Leaf seeTree;
     public Leaf nothingElse;
 
+    [Header("Outside Info")]
+    public LayerMask catLayer;
+    public LayerMask treeLayer;
+
     //All privates
-    private int initHealth;
+    [HideInInspector]
+    public int initHealth;
     private Leaf currentLeaf;
     [HideInInspector]
     public GameObject seenCat;
     [HideInInspector]
     public GameObject seenTree;
+
+    void Awake(){
+        gameObject.layer = 10;
+    }
 
     void Start(){
         initHealth = health;
@@ -36,15 +47,17 @@ public class DogTree : Agent
 
     public override void Succeed(){
         Debug.Log("Behaviour returned succesfull");
-
+        
         if(health <= initHealth/10){
             currentLeaf = lowHealth;
         } else if(FindTree()){
             currentLeaf = seeTree;
         } else if(FindCat()){
             currentLeaf = seeCat;
+        } else {
+            currentLeaf = nothingElse;
         }
-        currentLeaf = nothingElse;
+       
 
         StartCoroutine(Repeat());
     }
@@ -56,14 +69,42 @@ public class DogTree : Agent
 
     public override void Failed(){
         Debug.Log("Behaviour returned failed");
+
+        if(health <= initHealth/10){
+            currentLeaf = lowHealth;
+        } else if(FindTree()){
+            currentLeaf = seeTree;
+        } else if(FindCat()){
+            currentLeaf = seeCat;
+        } else {
+            currentLeaf = nothingElse;
+        }
+
+        StartCoroutine(Repeat());
     }
 
     //Dog behaviour
     private bool FindCat(){
-        return true;
+        Collider[] allCatsInSight = Physics.OverlapSphere(transform.position, lookDistance, catLayer);
+        if(allCatsInSight.Length >= 1){
+            seenCat = allCatsInSight[0].gameObject;
+            return true;
+        }
+        return false;
     }
     private bool FindTree(){
-        return true;
+        Collider[] allTreesInSight = Physics.OverlapSphere(transform.position, lookDistance, treeLayer);
+        if(allTreesInSight.Length >= 1){
+            seenTree = allTreesInSight[0].gameObject;
+            return true;
+        }
+        return false;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, lookDistance);
     }
 
 }

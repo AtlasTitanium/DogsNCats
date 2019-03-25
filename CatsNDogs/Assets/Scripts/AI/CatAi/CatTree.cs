@@ -20,6 +20,10 @@ public class CatTree : Agent
     [HideInInspector]
     public GameObject seenDog;
 
+    void Awake(){
+        gameObject.layer = 9;
+    }
+
     void Start(){
         initHealth = health;
         currentLeaf = nothingElse;
@@ -40,9 +44,10 @@ public class CatTree : Agent
             currentLeaf = hearMiauw;
         } else if(SeeDog()){
             currentLeaf = seeDog;
+        } else {
+            currentLeaf = nothingElse;
         }
-        currentLeaf = nothingElse;
-
+    
         StartCoroutine(Repeat());
     }
 
@@ -53,13 +58,25 @@ public class CatTree : Agent
 
     public override void Failed(){
         Debug.Log("Behaviour returned failed");
+        
+        if(health <= initHealth/10){
+            currentLeaf = lowHealth;
+        } else if(HearMiauw()){
+            currentLeaf = hearMiauw;
+        } else if(SeeDog()){
+            currentLeaf = seeDog;
+        } else {
+            currentLeaf = nothingElse;
+        }
+    
+        StartCoroutine(Repeat());
     }
 
     //Cat behaviour
     private bool SeeDog(){
-        return true;
+        return false;
     }
     private bool HearMiauw(){
-        return true;
+        return false;
     }
 }

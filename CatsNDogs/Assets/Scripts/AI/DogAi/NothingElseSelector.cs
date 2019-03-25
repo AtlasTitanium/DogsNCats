@@ -2,26 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowGrenade : Leaf
+public class NothingElseSelector  : Leaf
 {
-    private Agent agent;
+    public Leaf[] RandomBehaviours;
     
+    private Agent agent;
+    private DogTree dog;
     public override void StartBehaviour(Agent _agent){
         agent = _agent;
-        Debug.Log("throw grenade");
-        Succeed();
+        dog = agent.GetComponent<DogTree>();
+
+        RandomBehaviours[Random.Range(0,RandomBehaviours.Length)].StartBehaviour(agent);
     }
 
     public override void Succeed(){
         agent.Succeed();
-        agent = null;
     }
 
     public override void Continue(){
-        Debug.Log("No behaviour given");
+        agent.Continue();
     }
 
     public override void Failed(){
-        Debug.Log("No behaviour given");
+        agent.Failed();
     }
 }
