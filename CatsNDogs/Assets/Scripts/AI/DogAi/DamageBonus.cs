@@ -17,10 +17,11 @@ public class DamageBonus  : Leaf
 
         //behaviour
         newDamage = dog.dogDamage * damageIncreasePercent;
+        Debug.Log("dog damage increase with " + (dog.dogDamage - newDamage) + " so the current damage is now: " + newDamage);
         if(newDamage >= damageCap){
             newDamage = damageCap;
         }
-        Debug.Log("dog damage increase with " + newDamage + " so the current damage is now: " + dog.dogDamage);
+        
         dog.dogDamage = newDamage;
         Succeed();
     }

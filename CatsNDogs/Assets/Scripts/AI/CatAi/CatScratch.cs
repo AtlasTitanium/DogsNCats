@@ -11,7 +11,10 @@ public class CatScratch : Leaf
         agent = _agent;
         cat = agent.GetComponent<CatTree>();
 
-        StartCoroutine(DoDamage());
+        if(cat.seenDog != null){
+            transform.LookAt(cat.seenDog.transform);
+            StartCoroutine(DoDamage());
+        }
     }
 
     public override void Succeed(){
@@ -29,8 +32,9 @@ public class CatScratch : Leaf
     //behaviour
     IEnumerator DoDamage(){
         yield return new WaitForSeconds(waitSecondsForAttack);
-        cat.seenDog.GetComponent<CatTree>().health -= Mathf.RoundToInt(cat.catDamage);
-        if(cat.seenDog.GetComponent<CatTree>().health <= 0){
+        //Debug.Log("cat Scratch");
+        cat.seenDog.GetComponent<DogTree>().health -= Mathf.RoundToInt(cat.catDamage);
+        if(cat.seenDog.GetComponent<DogTree>().health <= 0){
             Destroy(cat.seenDog);
             cat.seenDog = null;
         }

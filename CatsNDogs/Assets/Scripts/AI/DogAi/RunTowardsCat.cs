@@ -21,17 +21,18 @@ public class RunTowardsCat : Leaf
             return;
         }
 
-        AStarUnit.target = dog.seenCat.transform;
-        AStarUnit.enabled = true;
-
-        if(AStarUnit.routeFinished){
+        if(Vector3.Distance(transform.position, dog.seenCat.transform.position) >= 5){
+            AStarUnit.target = dog.seenCat.transform;
+            AStarUnit.enabled = true;
+            Continue();
+        } else {
+            transform.LookAt(dog.seenCat.transform);
             AStarUnit.enabled = false;
             AStarUnit.target = null;
             //Debug.Log("Cat fights");
             DoDamage.StartBehaviour(agent);
-        } else {
-            Continue();
         }
+        
 
         if(dog.seenCat.GetComponent<CatSeeDog>().currentLeaf == dog.seenCat.GetComponent<CatRunAway>()){
             //Debug.Log("Cat runs away");

@@ -24,11 +24,14 @@ public class DogTree : Agent
     //All privates
     [HideInInspector]
     public int initHealth;
-    private Leaf currentLeaf;
+    [HideInInspector]
+    public Leaf currentLeaf;
     [HideInInspector]
     public GameObject seenCat;
     [HideInInspector]
     public GameObject seenTree;
+    [HideInInspector]
+    public bool speedBoostActive = false;
 
     void Awake(){
         gameObject.layer = 10;
@@ -46,7 +49,7 @@ public class DogTree : Agent
     }
 
     public override void Succeed(){
-        Debug.Log("Behaviour returned succesfull");
+        //Debug.Log("Behaviour returned succesfull");
         
         if(health <= initHealth/10){
             currentLeaf = lowHealth;
@@ -63,12 +66,12 @@ public class DogTree : Agent
     }
 
     public override void Continue(){
-        Debug.Log("Behaviour returned continue");
+        //Debug.Log("Behaviour returned continue");
         StartCoroutine(Repeat());
     }
 
     public override void Failed(){
-        Debug.Log("Behaviour returned failed");
+        //Debug.Log("Behaviour returned failed");
 
         if(health <= initHealth/10){
             currentLeaf = lowHealth;
@@ -87,12 +90,26 @@ public class DogTree : Agent
     private bool FindCat(){
         Collider[] allCatsInSight = Physics.OverlapSphere(transform.position, lookDistance, catLayer);
         if(allCatsInSight.Length >= 1){
-            seenCat = allCatsInSight[0].gameObject;
-            return true;
+            foreach(Collider cat in allCatsInSight){
+                if(cat.GetComponent<CatTree>().currentLeaf == cat.GetComponent<CatTree>().lowHealth){
+                    continue;
+                } else {
+                    seenCat = cat.gameObject;
+                }
+            }
         }
-        return false;
+
+        if(seenCat != null){
+            return true;
+        } else {
+            return false;
+        }
     }
     private bool FindTree(){
+        if(speedBoostActive){
+            return false;
+        }
+
         Collider[] allTreesInSight = Physics.OverlapSphere(transform.position, lookDistance, treeLayer);
         if(allTreesInSight.Length >= 1){
             seenTree = allTreesInSight[0].gameObject;

@@ -15,15 +15,15 @@ public class DogSeeTree : Leaf
         AStarUnit = agent.GetComponent<Unit>();
 
         //behaviour
-        if(dog.health <= dog.initHealth/10){
+        Debug.Log(Vector3.Distance(transform.position, dog.seenTree.transform.position));
+        if(Vector3.Distance(transform.position, dog.seenTree.transform.position) >= 5){
+            Debug.Log("going to tree");
             AStarUnit.target = dog.seenTree.transform;
             AStarUnit.enabled = true;
-
-            if(AStarUnit.routeFinished){
-                PeeOnTree.StartBehaviour(agent);
-            } else {
-                Continue();
-            }
+            Continue();
+        } else {
+            AStarUnit.enabled = false;
+            PeeOnTree.StartBehaviour(agent);
         }
     }
 

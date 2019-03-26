@@ -16,11 +16,21 @@ public class CatTree : Agent
     public Leaf lowHealth;
     public Leaf nothingElse;
 
+    [Header("Outside Info")]
+    public LayerMask dogLayer;
+    
     //All privates
-    private int initHealth;
-    private Leaf currentLeaf;
+    [HideInInspector]
+    public int initHealth;
+    //[HideInInspector]
+    public Leaf currentLeaf;
     [HideInInspector]
     public GameObject seenDog;
+    //[HideInInspector]
+    public bool askingForHealp = false;
+    //[HideInInspector]
+    public CatTree heardCat;
+
 
     void Awake(){
         gameObject.layer = 9;
@@ -38,9 +48,10 @@ public class CatTree : Agent
     }
 
     public override void Succeed(){
-        Debug.Log("Behaviour returned succesfull");
+        //.Log("Behaviour returned succesfull");
 
         if(health <= initHealth/10){
+            //Debug.Log("healthLow");
             currentLeaf = lowHealth;
         } else if(HearMiauw()){
             currentLeaf = hearMiauw;
@@ -54,14 +65,15 @@ public class CatTree : Agent
     }
 
     public override void Continue(){
-        Debug.Log("Behaviour returned continue");
+        //Debug.Log("Behaviour returned continue");
         StartCoroutine(Repeat());
     }
 
     public override void Failed(){
-        Debug.Log("Behaviour returned failed");
-        
+        //Debug.Log("Behaviour returned failed");
+
         if(health <= initHealth/10){
+            //Debug.Log("healthLow");
             currentLeaf = lowHealth;
         } else if(HearMiauw()){
             currentLeaf = hearMiauw;
@@ -76,9 +88,29 @@ public class CatTree : Agent
 
     //Cat behaviour
     private bool SeeDog(){
+        Collider[] allDogsInSight = Physics.OverlapSphere(transform.position, lookDistance, dogLayer);
+        if(allDogsInSight.Length >= 1){
+            seenDog = allDogsInSight[0].gameObject;
+            return true;
+        }
         return false;
     }
+    
     private bool HearMiauw(){
-        return false;
+        if(heardCat != null){
+            if(heardCat.askingForHealp){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, lookDistance);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DogRunAway  : Leaf
 {   
+    public int spawnHealSpeedPerSecond;
     public Transform spawn;
     private Agent agent;
     private DogTree dog;
@@ -18,7 +19,7 @@ public class DogRunAway  : Leaf
         AStarUnit.enabled = true;
 
         if(AStarUnit.routeFinished){
-            Succeed();
+            SlowlyHeal();
         } else {
             Continue();
         }
@@ -36,5 +37,16 @@ public class DogRunAway  : Leaf
     public override void Failed(){
         AStarUnit.enabled = false;
         agent.Failed();
+    }
+
+    //behaviour
+    private void SlowlyHeal(){
+        dog.health += spawnHealSpeedPerSecond;
+        if(dog.health >= dog.initHealth){
+            dog.health = dog.initHealth;
+            Succeed();
+        } else {
+            Continue();
+        }
     }
 }
