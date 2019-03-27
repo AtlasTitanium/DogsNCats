@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NothingElseSelector  : Leaf
+public class RandomSelector  : Leaf
 {
     public Leaf[] RandomBehaviours;
     

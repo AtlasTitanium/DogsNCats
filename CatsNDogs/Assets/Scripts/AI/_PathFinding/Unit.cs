@@ -21,11 +21,13 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void OnPathFound(Vector3[] waypoints, bool pathSuccessful) {
-		if (pathSuccessful) {
-			path = new Path(waypoints, transform.position, turnDst, stoppingDst);
+		if(target != null){
+			if (pathSuccessful) {
+				path = new Path(waypoints, transform.position, turnDst, stoppingDst);
 
-			StopCoroutine("FollowPath");
-			StartCoroutine("FollowPath");
+				StopCoroutine("FollowPath");
+				StartCoroutine("FollowPath");
+			}
 		}
 	}
 
@@ -98,4 +100,11 @@ public class Unit : MonoBehaviour {
 			path.DrawWithGizmos ();
 		}
 	}
+
+	void OnDestroy()
+    {
+		Destroy(this.gameObject);
+		this.enabled = false;
+        target = null;
+    }
 }

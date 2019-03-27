@@ -31,11 +31,16 @@ public class DogDamage : Leaf
     //behaviour
     IEnumerator DoDamage(){
         yield return new WaitForSeconds(waitSecondsForAttack);
-        dog.seenCat.GetComponent<CatTree>().health -= Mathf.RoundToInt(dog.dogDamage);
-        if(dog.seenCat.GetComponent<CatTree>().health <= 0){
-            Destroy(dog.seenCat);
-            dog.seenCat = null;
+        if(dog.seenCat != null){
+            dog.seenCat.GetComponent<CatTree>().health -= Mathf.RoundToInt(dog.dogDamage);
+            if(dog.seenCat.GetComponent<CatTree>().health <= 0){
+                Destroy(dog.seenCat);
+                dog.seenCat = null;
+            }
+            Succeed();
+        } else {
+            Failed();
         }
-        agent.Succeed();
+        
     }
 }

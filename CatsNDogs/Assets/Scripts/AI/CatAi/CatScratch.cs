@@ -33,11 +33,16 @@ public class CatScratch : Leaf
     IEnumerator DoDamage(){
         yield return new WaitForSeconds(waitSecondsForAttack);
         //Debug.Log("cat Scratch");
-        cat.seenDog.GetComponent<DogTree>().health -= Mathf.RoundToInt(cat.catDamage);
-        if(cat.seenDog.GetComponent<DogTree>().health <= 0){
-            Destroy(cat.seenDog);
-            cat.seenDog = null;
+        if(cat.seenDog != null){
+            cat.seenDog.GetComponent<DogTree>().health -= Mathf.RoundToInt(cat.catDamage);
+            if(cat.seenDog.GetComponent<DogTree>().health <= 0){
+                Destroy(cat.seenDog);
+                cat.seenDog = null;
+            }
+            Succeed();
+        } else {
+            Failed();
         }
-        agent.Succeed();
+        
     }
 }

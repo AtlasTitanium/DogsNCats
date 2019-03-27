@@ -2,28 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DogSeeTree : Leaf
+public class WalkAround : Leaf
 {   
-    public Leaf PeeOnTree;
-
     private Agent agent;
-    private DogTree dog;
     private Unit AStarUnit;
+
+    private GameObject placeholder;
     public override void StartBehaviour(Agent _agent){
         agent = _agent;
-        dog = agent.GetComponent<DogTree>();
         AStarUnit = agent.GetComponent<Unit>();
 
         //behaviour
-        //Debug.Log(Vector3.Distance(transform.position, dog.seenTree.transform.position));
-        if(Vector3.Distance(transform.position, dog.seenTree.transform.position) >= 5){
-            Debug.Log("going to tree");
-            AStarUnit.target = dog.seenTree.transform;
+        if(placeholder == null){
+            placeholder = new GameObject("location");
+            placeholder.transform.parent = transform;
+        }
+        Vector3 randomLocation = new Vector3(Random.Range(transform.position.x - 20, transform.position.x + 20), transform.position.y, Random.Range(transform.position.z - 10, transform.position.z + 10));
+        placeholder.transform.position = randomLocation;
+
+        if(Vector3.Distance(transform.position, randomLocation) >= 5){
+            AStarUnit.target = placeholder.transform;
             AStarUnit.enabled = true;
             Continue();
         } else {
             AStarUnit.enabled = false;
-            PeeOnTree.StartBehaviour(agent);
+            Succeed();
         }
     }
 

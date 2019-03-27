@@ -17,6 +17,10 @@ public class CatSeeDog : Leaf
         agent = _agent;
         cat = agent.GetComponent<CatTree>();
         
+        if(cat.seenDog == null){
+            return;
+        }
+        
         if(cat.seenDog.GetComponent<DogTree>().dogSize >= tooBigDogSize){
             currentLeaf = CatRunAway;
         } else {
