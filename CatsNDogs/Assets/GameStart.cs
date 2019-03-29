@@ -12,7 +12,7 @@ public class GameStart : MonoBehaviour
 
     void Start(){
         Cat.onClick.AddListener(IfCat);
-        Cat.onClick.AddListener(IfDog);
+        Dog.onClick.AddListener(IfDog);
     }
 
     public void IfCat(){
