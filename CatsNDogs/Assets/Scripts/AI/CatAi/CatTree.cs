@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CatTree : Agent
 {
@@ -18,17 +19,18 @@ public class CatTree : Agent
 
     [Header("Outside Info")]
     public LayerMask dogLayer;
+    public Slider healthBar;
     
     //All privates
     [HideInInspector]
     public int initHealth;
-    //[HideInInspector]
+    [HideInInspector]
     public Leaf currentLeaf;
     [HideInInspector]
     public GameObject seenDog;
-    //[HideInInspector]
+    [HideInInspector]
     public bool askingForHealp = false;
-    //[HideInInspector]
+    [HideInInspector]
     public CatTree heardCat;
 
 
@@ -42,6 +44,12 @@ public class CatTree : Agent
         StartCoroutine(Repeat());
     }
 
+    void Update(){
+        healthBar.value = health;
+        if(health <= 0){
+            Destroy(this.gameObject);
+        }
+    }
     public override IEnumerator Repeat(){
         yield return new WaitForSeconds(timeToWait);
         if(currentLeaf != null){currentLeaf.StartBehaviour(this);}
@@ -90,6 +98,14 @@ public class CatTree : Agent
     private bool SeeDog(){
         Collider[] allDogsInSight = Physics.OverlapSphere(transform.position, lookDistance, dogLayer);
         if(allDogsInSight.Length >= 1){
+            foreach(Collider dog in allDogsInSight){
+                if(dog.tag == "Player"){
+                    seenDog = dog.gameObject;
+                    return true;
+                } else {
+                    continue;
+                }
+            }
             seenDog = allDogsInSight[0].gameObject;
             return true;
         }

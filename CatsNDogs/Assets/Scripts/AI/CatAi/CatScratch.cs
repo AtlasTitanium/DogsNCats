@@ -34,10 +34,14 @@ public class CatScratch : Leaf
         yield return new WaitForSeconds(waitSecondsForAttack);
         //Debug.Log("cat Scratch");
         if(cat.seenDog != null){
-            cat.seenDog.GetComponent<DogTree>().health -= Mathf.RoundToInt(cat.catDamage);
-            if(cat.seenDog.GetComponent<DogTree>().health <= 0){
-                Destroy(cat.seenDog);
-                cat.seenDog = null;
+            if(cat.seeDog.tag == "Player"){
+                cat.seenDog.GetComponent<PlayerDog>().health -= Mathf.RoundToInt(cat.catDamage);
+            } else {
+                cat.seenDog.GetComponent<DogTree>().health -= Mathf.RoundToInt(cat.catDamage);
+                if(cat.seenDog.GetComponent<DogTree>().health <= 0){
+                    Destroy(cat.seenDog);
+                    cat.seenDog = null;
+                }
             }
             Succeed();
         } else {

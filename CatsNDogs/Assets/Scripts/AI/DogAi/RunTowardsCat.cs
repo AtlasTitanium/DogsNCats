@@ -34,10 +34,13 @@ public class RunTowardsCat : Leaf
         }
         
 
-        if(dog.seenCat.GetComponent<CatSeeDog>().currentLeaf == dog.seenCat.GetComponent<CatRunAway>()){
-            //Debug.Log("Cat runs away");
-            GainDamageBonus.StartBehaviour(agent);
-            Succeed();
+        if(dog.seenCat.tag == "Player"){
+            DoDamage.StartBehaviour(agent);
+        } else {
+            if(dog.seenCat.GetComponent<CatSeeDog>().currentLeaf == dog.seenCat.GetComponent<CatRunAway>()){
+                //Debug.Log("Cat runs away");
+                GainDamageBonus.StartBehaviour(agent);
+            }
         }
     }
 

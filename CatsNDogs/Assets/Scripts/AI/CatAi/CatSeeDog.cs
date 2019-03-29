@@ -18,15 +18,20 @@ public class CatSeeDog : Leaf
         cat = agent.GetComponent<CatTree>();
         
         if(cat.seenDog == null){
+            Failed();
             return;
         }
         
-        if(cat.seenDog.GetComponent<DogTree>().dogSize >= tooBigDogSize){
-            currentLeaf = CatRunAway;
-        } else {
+        if(cat.seeDog.tag == "Player"){
             currentLeaf = Scratch;
+        } else {
+            if(cat.seenDog.GetComponent<DogTree>().dogSize >= tooBigDogSize){
+                currentLeaf = CatRunAway;
+            } else {
+                currentLeaf = Scratch;
+            }
         }
-
+        
         if(currentLeaf != null){currentLeaf.StartBehaviour(agent);}
     }
 
